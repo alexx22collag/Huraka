@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 
-const Men = ({data }) => {
+const Men = () => {
     const [start, setStart] = useState(true);
     const [end, setEnd] = useState(false);
     const sliderRef = useRef(null);
@@ -39,6 +40,23 @@ const Men = ({data }) => {
             clearInterval(interval);
         };
     }, [end]);
+
+
+    const baseUrl = "https://localhost:7218/api/Products/category/Men";
+    const [data, setData] = useState([]);
+
+    const peticionGet = async () => {
+        try {
+            const response = await axios.get(baseUrl);
+            setData(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        peticionGet();
+    }, []);
 
     return (
         <div className="slider" style={{ paddingTop: '150px' }}>

@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 
 
-const Women = ({ data }) => {
+const Women = () => {
     const [start, setStart] = useState(true);
     const [end, setEnd] = useState(false);
     const sliderRef = useRef(null);
@@ -40,22 +41,23 @@ const Women = ({ data }) => {
             clearInterval(interval);
         };
     }, [end]);
-    //const [products, setProducts] = useState([]);
 
-    //useEffect(() => {
-    //    const fetchData = async () => {
-    //        try {
-    //            const response = await fetch('https://localhost:7218/api/Products/category/Women');
-    //            const data = await response.json();
-    //            setProducts(data);
-    //        } catch (error) {
-    //            console.error(error);
-    //        }
-    //    };
 
-    //    fetchData();
-    //}, []);
+    const baseUrl = "https://localhost:7218/api/Products/category/Women";
+    const [data, setData] = useState([]);
 
+    const peticionGet = async () => {
+        try {
+            const response = await axios.get(baseUrl);
+            setData(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        peticionGet();
+    }, []);
     return (
 
         <div className="slider" style={{ paddingTop: '150px' }}>

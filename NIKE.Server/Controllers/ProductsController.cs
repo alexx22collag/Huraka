@@ -29,6 +29,7 @@ namespace NIKE.Server.Controllers
         {
             return await _context.Products.ToListAsync();
         }
+        
         // GET: api/Products/category/{category}
         [HttpGet("category/{category}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string category)
