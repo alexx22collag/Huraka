@@ -83,7 +83,7 @@ const TablaCrear = () => {
                 var dataAuxiliar = data;
                 dataAuxiliar.map(p => {
                     if (p.productId === productSelected.price) {
-                        p.name = respuesta.productName;
+                        p.productName = respuesta.productName;
                         p.category = respuesta.category;
                         p.subcategory = respuesta.subcategory;
                         p.description = respuesta.description;
@@ -151,8 +151,6 @@ const TablaCrear = () => {
                                 </td>
                                 <td className="text-right">${Number(product.price).toFixed(2)}</td>
                                 <td>{product.stock}</td>
-                                <td>{product.category}</td>
-                                <td>{product.subcategory}</td>
                                 <td>
                                     <button className="btn btn-info " onClick={() => seleccionarProduct(product, "Editar")}>Edit</button>
                                     <button className="btn btn-danger " onClick={() => seleccionarProduct(product, "Eliminar")} >Delete</button>

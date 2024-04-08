@@ -58,6 +58,8 @@ const Men = () => {
         peticionGet();
     }, []);
 
+
+
     return (
         <div className="slider" style={{ paddingTop: '150px' }}>
             <div className="container" id="containerMen">
@@ -197,8 +199,7 @@ const Men = () => {
 
                                     </p>
                                     <button>BUY</button> 
-                                    <button>Editar</button> 
-                                    <button>Eliminar</button> 
+
                                     </div>
                                 </div>
                             </div>
