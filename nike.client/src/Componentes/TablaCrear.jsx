@@ -119,8 +119,8 @@ const TablaCrear = () => {
                         <th>Image2</th>
                         <th>Price</th>
                         <th>Stock</th>
-                        <th>Category</th>
-                        <th>Subcategory</th>
+                        <th></th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -151,6 +151,7 @@ const TablaCrear = () => {
                                 </td>
                                 <td className="text-right">${Number(product.price).toFixed(2)}</td>
                                 <td>{product.stock}</td>
+                                <td></td>
                                 <td>
                                     <button className="btn btn-info " onClick={() => seleccionarProduct(product, "Editar")}>Edit</button>
                                     <button className="btn btn-danger " onClick={() => seleccionarProduct(product, "Eliminar")} >Delete</button>
