@@ -9,6 +9,7 @@ import './style.scss';
 import Body from './Componentes/Body.jsx';
 import Portfolio from './Componentes/Portfolio.jsx';
 import History from './Componentes/History.jsx';
+import Runner from './Componentes/Runner.jsx';
 import Team from './Componentes/Team.jsx';
 import Contact from './Componentes/Contact.jsx';
 import Footer from './Componentes/Footer.jsx';
@@ -37,6 +38,9 @@ const App = () => {
                         <Body />
                         
                         <Portfolio />
+                        <div>
+                            <Runner />
+                        </div>
                         <History/>
                         <Team />
                         <Contact />
