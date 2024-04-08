@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const Women = () => {
+const AccesoriesKids = () => {
     const [start, setStart] = useState(true);
     const [end, setEnd] = useState(false);
     const sliderRef = useRef(null);
@@ -43,7 +43,7 @@ const Women = () => {
     }, [end]);
 
 
-    const baseUrl = "https://localhost:7218/api/Products/category/Women";
+    const baseUrl = "https://localhost:7218/api/Products/category/Kids/subcategory/Accesories";
     const [data, setData] = useState([]);
 
     const peticionGet = async () => {
@@ -117,17 +117,17 @@ const Women = () => {
                 <div >
                     <ul>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/ClothesWomen">
+                            <Link className="nav-link" to="/ClothesKids">
                                 Clothes
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/FootwearWomen">
+                            <Link className="nav-link" to="/FootwearKids">
                                 Footwear
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/AccesoriesWomen">
+                            <Link className="nav-link" to="/AccesoriesKids">
                                 Accesories
                             </Link>
                         </li>
@@ -135,6 +135,7 @@ const Women = () => {
                 </div>
             </nav>
             <div className="container-fluid my-5">
+
 
                 <div className="row">
                     {data.map((product) => (
@@ -235,4 +236,4 @@ const Women = () => {
     );
 };
 
-export default Women;
+export default AccesoriesKids;

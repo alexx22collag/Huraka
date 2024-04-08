@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Kids = () => {
@@ -40,6 +41,8 @@ const Kids = () => {
             clearInterval(interval);
         };
     }, [end]);
+
+
     const baseUrl = "https://localhost:7218/api/Products/category/Kids";
     const [data, setData] = useState([]);
 
@@ -55,6 +58,7 @@ const Kids = () => {
     useEffect(() => {
         peticionGet();
     }, []);
+
 
 
     return (
@@ -108,7 +112,30 @@ const Kids = () => {
                 <button className={`slider__nav__button ${start ? '' : 'slider__nav__button--active'}`} onClick={() => sliderRef.current.scrollBy({ left: sliderRef.current.offsetWidth * -1, behavior: 'smooth' })}>Previous</button>
                 <button className={`slider__nav__button ${end ? '' : 'slider__nav__button--active'}`} onClick={() => sliderRef.current.scrollBy({ left: sliderRef.current.offsetWidth, behavior: 'smooth' })}>Next</button>
             </div>
+
+            <nav >
+                <div >
+                    <ul>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/ClothesKids">
+                                Clothes
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/FootwearKids">
+                                Footwear
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/AccesoriesKids">
+                                Accesories
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
             <div className="container-fluid my-5">
+
                 <div className="row">
                     {data.map((product) => (
                         <div key={product.id} className="col-12 col-sm-6 col-lg-4">
@@ -190,7 +217,11 @@ const Kids = () => {
                                         </select>
 
                                     </p>
+                                    <p>
+
+                                    </p>
                                     <button>BUY</button>
+
                                 </div>
                             </div>
                         </div>
@@ -203,6 +234,5 @@ const Kids = () => {
         </div>
     );
 };
-
 
 export default Kids;

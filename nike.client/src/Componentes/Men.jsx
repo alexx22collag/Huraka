@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Men = () => {
@@ -112,8 +113,29 @@ const Men = () => {
                 <button className={`slider__nav__button ${end ? '' : 'slider__nav__button--active'}`} onClick={() => sliderRef.current.scrollBy({ left: sliderRef.current.offsetWidth, behavior: 'smooth' })}>Next</button>
             </div>
 
+            <nav >
+                <div >
+                    <ul>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/ClothesMen">
+                                Clothes
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/FootwearMen">
+                                Footwear
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/AccesoriesMen">
+                                Accesories
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
             <div className="container-fluid my-5">
-
+                
                 <div className="row">
                     {data.map((product) => (
                             <div key={product.id} className="col-12 col-sm-6 col-lg-4">
