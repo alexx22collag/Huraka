@@ -33,21 +33,29 @@ const Runner = () => {
         });
         console.log(runnerSelected);
     }
+    const abrirCerrarModalInsertar = () => setModalInsertar(!modalInsertar);
+    const [modalInsertar, setModalInsertar] = useState(false);
     const peticionPost = async () => {
-        // Verificar si el email ya está en la lista de datos
-        if (data.some(runner => runner.email === runnerSelected.email)) {
-            alert("Ya estas inscrito en la carrera");
-            return; // Detener la ejecución de la función
+        if (!runnerSelected.runnerName) {
+            alert("Por favor, ingresa tu nombre");
+            return; // Detener la ejecución de la función si el nombre está vacío
         }
-
+        if (!runnerSelected.email) {
+            alert("Por favor, ingresa tu direccion de correo electronico");
+            return; // Detener la ejecución de la función si el correo electrónico está vacío
+        }
+        if (data.some(runner => runner.email === runnerSelected.email)) {
+            alert("Ya estás inscrito en la carrera");
+            return; // Detener la ejecución de la función si el correo electrónico ya está registrado
+        }
         delete runnerSelected.runnerId;
         await axios.post(baseUrl, runnerSelected)
             .then(response => {
                 setData(data.concat(response.data));
+                abrirCerrarModalInsertar();
             }).catch(error => {
                 console.log(error);
             });
-        alert("Gracias " + runnerSelected.runnerName + " por inscribirte en la carrera");
     }
     return (
         <>
@@ -78,9 +86,16 @@ const Runner = () => {
                             />
                         </FormGroup>
                         <FormGroup className="text-center">
-                            <Button className="btn btn-primary px-4" onClick={() => peticionPost()} >Inscribirse</Button>
+                            <Button className="btn btn-primary px-4" onClick={() =>  peticionPost()} >Inscribirse</Button>
                         </FormGroup>
+                        
                     </Form>
+                    <Modal isOpen={modalInsertar}>
+                        <ModalBody>Gracias por inscribirte a la carrera {runnerSelected.runnerName} </ModalBody>
+                        <ModalFooter>
+                            <button className="btn btn-danger" onClick={() => abrirCerrarModalInsertar()}>Cerrar</button>
+                        </ModalFooter>
+                    </Modal>
                 </div>
             </div>
 
