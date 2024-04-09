@@ -100,6 +100,12 @@ const Header = () => {
                                     +
                                 </Link>
                             </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/Carrito">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </div>

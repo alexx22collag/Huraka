@@ -35,7 +35,8 @@ import AccesoriesKids from './Componentes/AccesoriesKids.jsx';
 import FootwearKids from './Componentes/FootwearKids.jsx';
 //Ver productos
 import TablaCrear from './Componentes/TablaCrear.jsx';
-
+//Carrito
+import Carrito from './Componentes/Carrito.jsx';
 
 
 const App = () => {
@@ -49,6 +50,7 @@ const App = () => {
                 <Route path="/Women" element={<Women/>} />
                 <Route path="/Kids" element={<Kids/>} />
                 <Route path="/TablaCrear" element={<TablaCrear />} />
+                <Route path="/Carrito" element={<Carrito/>}/>
                 <Route path="/history" element={<History />} />
                 <Route path="/News" element={<News />} />
                 

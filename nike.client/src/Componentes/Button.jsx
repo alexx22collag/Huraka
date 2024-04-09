@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
-
-const Button = () => {
+const Button = ({ addToCart }) => {
     const buttonRef = useRef(null);
 
     useEffect(() => {
@@ -106,10 +105,10 @@ const Button = () => {
     }, []);
 
     return (
-        <button ref={buttonRef} className="truck-button">
-            <span className="default">Complete Order</span>
+        <button ref={buttonRef} className="truck-button" onClick={addToCart}>
+            <span className="default">Add to Cart</span>
             <span className="success">
-                Order Placed
+                Added
                 <svg viewBox="0 0 12 10">
                     <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
                 </svg>

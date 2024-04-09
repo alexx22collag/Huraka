@@ -131,6 +131,7 @@ const TablaCrear = () => {
                     ) : (
                         data.map((product) => (
                             <tr key={product.id}>
+                                <td></td>
                                 <td>{product.productName}</td>
                                 <td>{product.description}</td>
                                 <td>
@@ -151,7 +152,6 @@ const TablaCrear = () => {
                                 </td>
                                 <td className="text-right">${Number(product.price).toFixed(2)}</td>
                                 <td>{product.stock}</td>
-                                <td></td>
                                 <td>
                                     <button className="btn btn-info " onClick={() => seleccionarProduct(product, "Editar")}>Edit</button>
                                     <button className="btn btn-danger " onClick={() => seleccionarProduct(product, "Eliminar")} >Delete</button>
