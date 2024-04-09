@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Titillium+Web:400,700&display=swap");
 
+
 *,
 *::before,
 *::after {
@@ -9,12 +10,69 @@
 body {
     margin: 0;
     padding: 0;
-    // height: 100vh;
-    // display: grid;
-    // grid-template-rows: 1fr 3fr 1.5fr;
-    // grid-template-columns: 50px 1fr 1fr 1fr 1fr 50px;
-    // row-gap: 2vh;
+    
     font-family: "Titillium Web", sans-serif;
+}
+
+
+$size: 50px;
+$f-size: 14px;
+
+ul.breadcrumb {
+    margin-left: $size;
+    display: inline-block;
+    list-style: none;
+
+    li {
+        float: right;
+        padding: 2px;
+        background-color: black;
+        border-radius: ($size);
+        position: relative;
+        margin-left: 0px;
+        transition: (all .2s);
+        margin-top: 3px;
+
+        a {
+            overflow: hidden;
+            border-radius: ($size);
+            transition: (all .2s);
+            text-decoration: none;
+            height: $size;
+            color: black;
+            background-color: white;
+            text-align: center;
+            min-width: $size;
+            display: inline;
+            line-height: 24px;
+            padding-left: $size + 2;
+            padding-right: $size/2 +$size/6;
+            width: $size;
+
+            .icon {
+                display: inline-block;
+            }
+
+            .textB {
+                font-size: 16px; /* Ajusta el tamaño de fuente según tus preferencias */
+                color: #333; /* Ajusta el color de texto según tus preferencias */
+                margin-left: 5px; /* Agrega un espacio entre el icono y el texto */
+            }
+
+            &:hover {
+                width: 150px;
+                background-color: lightgray;
+                transition: width 0.5s, background-color 0.5s;
+
+
+                .textB {
+                    font-size: 16px; /* Ajusta el tamaño de fuente según tus preferencias */
+                    color: #333; /* Ajusta el color de texto según tus preferencias */
+                    margin-left: 5px; /* Agrega un espacio entre el icono y el texto */
+                }
+            }
+        }
+    }
 }
 
 .carousel {

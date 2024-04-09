@@ -112,25 +112,25 @@ const AccesoriesKids = () => {
                 <button className={`slider__nav__button ${start ? '' : 'slider__nav__button--active'}`} onClick={() => sliderRef.current.scrollBy({ left: sliderRef.current.offsetWidth * -1, behavior: 'smooth' })}>Previous</button>
                 <button className={`slider__nav__button ${end ? '' : 'slider__nav__button--active'}`} onClick={() => sliderRef.current.scrollBy({ left: sliderRef.current.offsetWidth, behavior: 'smooth' })}>Next</button>
             </div>
-
             <nav >
-                <div >
-                    <ul>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/ClothesKids">
-                                Clothes
+                <div className="text-center">
+                    <ul className="breadcrumb">
+                        <li>
+                            <Link to="/AccesoriesKids">
+                                Accesories - Explore our latest collection
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/FootwearKids">
-                                Footwear
+                        <li>
+                            <Link to="/FootwearKids">
+                                Footwear - Find your perfect pair
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/AccesoriesKids">
-                                Accesories
+                        <li>
+                            <Link to="/ClothesKids">
+                                Clothes - Discover the collection
                             </Link>
                         </li>
+
                     </ul>
                 </div>
             </nav>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Button from './Button';
 
+
 const Women = () => {
     const [start, setStart] = useState(true);
     const [end, setEnd] = useState(false);
@@ -114,23 +115,24 @@ const Women = () => {
             </div>
 
             <nav >
-                <div >
-                    <ul>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/ClothesWomen">
-                                Clothes
+                <div className="text-center">
+                    <ul className="breadcrumb">
+                        <li>
+                            <Link to="/AccesoriesWomen">
+                                Accesories - Explore our latest collection
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/FootwearWomen">
-                                Footwear
+                        <li>
+                            <Link to="/FootwearWomen">
+                                Footwear - Find your perfect pair
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/AccesoriesWomen">
-                                Accesories
+                        <li>
+                            <Link to="/ClothesWomen">
+                              Clothes - Discover the collection
                             </Link>
                         </li>
+
                     </ul>
                 </div>
             </nav>
@@ -209,6 +211,7 @@ const Women = () => {
                     ))}
                 </div>
             </div>
+            
         </div>
     );
 };
