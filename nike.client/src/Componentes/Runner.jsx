@@ -7,6 +7,7 @@ const Runner = () => {
 
     const baseUrl = "https://localhost:7218/api/Runners";
 
+    const [alert, setAlert] = useState({ message: '', type: '' });
     const peticionGet = async () => {
         try {
             const response = await axios.get(baseUrl);
@@ -37,16 +38,16 @@ const Runner = () => {
     const [modalInsertar, setModalInsertar] = useState(false);
     const peticionPost = async () => {
         if (!runnerSelected.runnerName) {
-            alert("Por favor, ingresa tu nombre");
-            return; // Detener la ejecución de la función si el nombre está vacío
+            setAlert({ message: 'Por favor, ingresa tu nombre', type: 'danger' });
+            return;
         }
         if (!runnerSelected.email) {
-            alert("Por favor, ingresa tu direccion de correo electronico");
-            return; // Detener la ejecución de la función si el correo electrónico está vacío
+            setAlert({ message: 'Por favor, ingresa tu email', type: 'danger' });
+            return;
         }
         if (data.some(runner => runner.email === runnerSelected.email)) {
-            alert("Ya estás inscrito en la carrera");
-            return; // Detener la ejecución de la función si el correo electrónico ya está registrado
+            setAlert({ message: 'Ya estas inscrito en la carrera', type: 'warning' });
+            return;
         }
         delete runnerSelected.runnerId;
         await axios.post(baseUrl, runnerSelected)
@@ -61,35 +62,51 @@ const Runner = () => {
         <>
             <div className="row align-items-center justify-content-center mb-5">
                 <div className="col-md-6">
-                    <Form className="mx-auto mt-5 p-4 border rounded bg-light">
-                        <h2 className="text-center mb-4">Inscripcion a la Carrera</h2>
-                        <FormGroup>
-                            <Label for="runnerName">Nombre</Label>
-                            <Input
-                                id="runnerName"
-                                name="runnerName"
-                                placeholder="Ingrese su nombre"
-                                type="text"
-                                onChange={handleChange}
-                                className="form-control"
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="email">Email</Label>
-                            <Input
-                                id="email"
-                                name="email"
-                                placeholder="Ingrese su email"
-                                type="email"
-                                onChange={handleChange}
-                                className="form-control"
-                            />
-                        </FormGroup>
-                        <FormGroup className="text-center">
-                            <Button className="btn btn-primary px-4" onClick={() =>  peticionPost()} >Inscribirse</Button>
-                        </FormGroup>
-                        
+                    <Form className="mx-auto mt-5 p-4 border rounded bg-light" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <div style={{ flex: '0 0 45%' }}>
+                            <h1 className="text-center mb-4">Run with us</h1>
+                            <h4 className="text-center">Save the date: 09/05/2024</h4>
+                            <FormGroup>
+                                <Input
+                                    id="runnerName"
+                                    name="runnerName"
+                                    placeholder="Your Name"
+                                    type="text"
+                                    required
+                                    onChange={handleChange}
+                                    className="form-control"
+                                />
+                            </FormGroup>
+                            <FormGroup>
+                                <Input
+                                    id="email"
+                                    name="email"
+                                    placeholder="Your email"
+                                    type="email"
+                                    onChange={handleChange}
+                                    required
+                                    className="form-control"
+                                />
+                            </FormGroup>
+                            <FormGroup className="text-center">
+                                <Button className="item button-pressure" id="liveAlertBtn" onClick={() => peticionPost()} > I want run! <i class="fas fa-running"></i> </Button>
+                            </FormGroup>
+                        </div>
+                        <img src="https://media0.giphy.com/media/3o6Ztqh4JSlVqi2Z20/giphy.gif?cid=790b7611n5t4gbur4ll07olofw1q15tabmc06w17dc1tro5d&ep=v1_gifs_search&rid=giphy.gif&ct=g" style={{ width: '45%', height: 'auto', objectFit: 'cover' }} />
                     </Form>
+
+                    {alert.message && (
+                        <div className={`alert alert-${alert.type} alert-dismissible`} role="alert">
+                            <div>{alert.message}</div>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close"
+                                onClick={() => setAlert({ message: '', type: '' })}
+                            ></button>
+                        </div>
+                    )}
                     <Modal isOpen={modalInsertar}>
                         <ModalBody>Gracias por inscribirte a la carrera {runnerSelected.runnerName} </ModalBody>
                         <ModalFooter>
