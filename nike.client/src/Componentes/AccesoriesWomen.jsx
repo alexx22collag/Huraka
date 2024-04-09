@@ -142,38 +142,27 @@ const AccesoriesWomen = () => {
                             <div className="card border-0 position-relative h-100 card-listing hover-trigger">
                                 <div className="card-header">
                                     {/* Card Images */}
-                                    <picture className="position-relative overflow-hidden d-block bg-light">
+                                    <figure className="position-relative overflow-hidden d-block bg-light">
                                         <img
                                             className="w-100 img-fluid position-relative z-index-10"
                                             title=""
                                             src={product.image}
                                             alt={product.productName}
                                         />
-                                    </picture>
-                                    <picture className="position-absolute z-index-20 start-0 top-0 hover-show bg-light">
+                                    </figure>
+                                    <figure className="position-absolute z-index-20 start-0 top-0 hover-show bg-light">
                                         <img
                                             className="w-100 img-fluid"
                                             title=""
                                             src={product.image2}
                                             alt={product.productName}
                                         />
-                                    </picture>
-                                    <h4><strong>{product.productName}</strong></h4>
-                                    {/* /Card Images */}
-                                    {/* Card actions */}
-                                    <p> {product.description}</p>
-
-                                    <div className="card-actions">
-                                        <span className="small text-uppercase tracking-wide fw-bolder text-center d-block">
-                                            Quick Add
-                                        </span>
-                                        <div className="d-flex justify-content-center align-items-center flex-wrap mt-3">
-                                            <button className="btn btn-outline-dark btn-sm mx-2">S</button>
-                                            <button className="btn btn-outline-dark btn-sm mx-2">M</button>
-                                            <button className="btn btn-outline-dark btn-sm mx-2">L</button>
-                                        </div>
-                                    </div>
-                                    {/* /Card Actions */}
+                                    </figure>  
+                                    
+                                </div>
+                                <div >
+                                    <h3><strong>{product.productName}</strong></h3>
+                                    <h5> {product.description}</h5>
                                 </div>
                                 <div className="card-body px-0 text-center">
                                     {/* Review Stars */}
@@ -193,6 +182,7 @@ const AccesoriesWomen = () => {
                                                 <i className="ri-star-fill mr-1 text-muted opacity-25"></i>
                                                 <i className="ri-star-fill mr-1 text-muted opacity-25"></i>
                                             </div>
+
                                         </div>
                                         <span className="ms-2 text-muted fw-medium"> 4.7 (456)</span>
                                         <div class="select-container">
@@ -202,27 +192,25 @@ const AccesoriesWomen = () => {
 
 
                                     </div>
-
-                                    {/* /Review Stars */}
-
-                                    <p className="fw-bolder m-0 mt-2">${product.price}</p>
-                                    <p>
-                                        <select class="form-select form-select-sm" aria-label="Small select example">
-                                            <option selected>SIZE</option>
-                                            <option value="1">XS</option>
-                                            <option value="2">S</option>
-                                            <option value="3">M</option>
-                                            <option value="4">L</option>
-                                            <option value="5">XL</option>
-                                        </select>
-
-                                    </p>
-                                    <p>
-
-                                    </p>
-                                    <button>BUY</button>
-
                                 </div>
+
+                                {/* /Review Stars */}
+                                
+
+                                <p className="fw-bolder m-0 mt-2">${product.price}</p>
+                                <p>
+                                    <select class="form-select form-select-sm" aria-label="Small select example">
+                                        <option selected>SIZE</option>
+                                        <option value="1">XS</option>
+                                        <option value="2">S</option>
+                                        <option value="3">M</option>
+                                        <option value="4">L</option>
+                                        <option value="5">XL</option>
+                                    </select>
+
+                                </p>
+                                <button className="btn btn-dark text-white">Add to car</button> <br></br>
+
                             </div>
                         </div>
                     ))
