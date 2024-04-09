@@ -2,61 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Button, CardBody, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 
-
 const TablaCrear = () => {
-    const [data, setData] = useState([]);
 
-    const baseUrl = "https://localhost:7218/api/Products";
-
-    const peticionGet = async () => {
-        try {
-            const response = await axios.get(baseUrl);
-            setData(response.data);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    useEffect(() => {
-        peticionGet();
-    }, []);
-
-    //insertar 
-    const abrirCerrarModalInsertar = () => setModalInsertar(!modalInsertar);
-    const [modalInsertar, setModalInsertar] = useState(false);
-    const [productSelected, setProductSelected] = useState({
-        productId: '',
-        productName: '',
-        description: '',
-        image: '',
-        stock: '',
-        image2: '',
-        category: '',
-        subcategory: '',
-        price: ''
-    })
-
-
-    const handleChange = e => {
-        const { name, value } = e.target;
-        setProductSelected({
-            ...productSelected, [name]: value
-        });
-        console.log(productSelected);
-    }
-
-    const peticionPost = async () => {
-        delete productSelected.id;
-        await axios.post(baseUrl, productSelected)
-            .then(response => {
-                setData(data.concat(response.data));
-                abrirCerrarModalInsertar();
-            }).catch(error => {
-                console.log(error);
-            })
-    }
-
-    //borrar
     const [modalEliminar, setModalEliminar] = useState(false);
     const abrirCerrarModalEliminar = () => setModalEliminar(!modalEliminar);
     const seleccionarProduct = (product, caso) => {
@@ -84,8 +31,8 @@ const TablaCrear = () => {
                 dataAuxiliar.map(p => {
                     if (p.productId === productSelected.price) {
                         p.productName = respuesta.productName;
-                        p.category = respuesta.category;
-                        p.subcategory = respuesta.subcategory;
+                        p.category.categoryName = respuesta.category;
+                        p.subcategory.subcategoryName = respuesta.subcategory;
                         p.description = respuesta.description;
                         p.stock = respuesta.stock;
                         p.image = respuesta.image;
@@ -98,17 +45,102 @@ const TablaCrear = () => {
                 console.log(error);
             })
     }
+    const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [subcategories, setSubcategories] = useState([]);
+    const [modalInsertar, setModalInsertar] = useState(false);
+    const [productSelected, setProductSelected] = useState({
+        productId: '',
+        productName: '',
+        description: '',
+        image: '',
+        stock: '',
+        image2: '',
+        category: '',
+        subcategory: '',
+        price: ''
+    });
+
+    useEffect(() => {
+        peticionGetProducts();
+        peticionGetCategories();
+        peticionGetSubcategories();
+    }, []);
+
+    const baseUrlProducts = "https://localhost:7218/api/Products";
+    const baseUrlCategories = "https://localhost:7218/api/Categories";
+    const baseUrlSubcategories = "https://localhost:7218/api/Subcategories";
+
+    const peticionGetProducts = async () => {
+        try {
+            const response = await axios.get(baseUrlProducts);
+            setProducts(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const peticionGetCategories = async () => {
+        try {
+            const response = await axios.get(baseUrlCategories);
+            setCategories(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const peticionGetSubcategories = async () => {
+        try {
+            const response = await axios.get(baseUrlSubcategories);
+            setSubcategories(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const abrirCerrarModalInsertar = () => setModalInsertar(!modalInsertar);
+
+    const handleChange = e => {
+        const { name, value } = e.target;
+        setProductSelected({
+            ...productSelected,
+            [name]: value
+        });
+    }
+
+    const handleCategoryChange = e => {
+        const categoryId = e.target.value;
+        const filteredSubcategories = subcategories.filter(subcategory => subcategory.categoryId === categoryId);
+        setProductSelected({
+            ...productSelected,
+            category: categoryId,
+            subcategory: filteredSubcategories.length > 0 ? filteredSubcategories[0].id : ''
+        });
+    }
+
+    const handleInsertProduct = async () => {
+        try {
+            delete productSelected.id;
+            await axios.post(baseUrlProducts, productSelected);
+            peticionGetProducts();
+            abrirCerrarModalInsertar();
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <div className="slider" style={{ paddingTop: '150px' }}>
             <div className="container" id="containerMen">
-                <h1 id="h1Men">Men's Nike</h1>
+                <h1 id="h1Men">Product's Nike</h1>
                 <p id="pMen">Just Do It.</p>
-                <p id="pMen">Si nadie piensa que puedes, entonces tienes que hacerlo.</p>
+                <p id="pMen">Nuestro catalogo</p>
+
             </div>
-            <CardBody>
-                <Button onClick={() => abrirCerrarModalInsertar()}>Nuevo Producto</Button>
-            </CardBody>
+            <p><CardBody>
+                <Button onClick={() => abrirCerrarModalInsertar()}color="success">Nuevo Producto</Button>
+            </CardBody></p>
+            
             <Table bordered hover>
                 <thead>
                     <tr>
@@ -124,12 +156,12 @@ const TablaCrear = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.length < 1 ? (
+                    {products.length < 1 ? (
                         <tr>
                             <td colSpan="10">Sin Registros</td>
                         </tr>
                     ) : (
-                        data.map((product) => (
+                            products.map((product) => (
                             <tr key={product.id}>
                                 <td></td>
                                 <td>{product.productName}</td>
@@ -153,7 +185,7 @@ const TablaCrear = () => {
                                 <td className="text-right">${Number(product.price).toFixed(2)}</td>
                                 <td>{product.stock}</td>
                                 <td>
-                                    <button className="btn btn-info " onClick={() => seleccionarProduct(product, "Editar")}>Edit</button>
+                                    <button className="btn btn-warning " onClick={() => seleccionarProduct(product, "Editar")}>Edit</button>
                                     <button className="btn btn-danger " onClick={() => seleccionarProduct(product, "Eliminar")} >Delete</button>
                                 </td>
                             </tr>
@@ -162,64 +194,54 @@ const TablaCrear = () => {
                 </tbody>
             </Table>
             <div>
-                <Modal isOpen={modalInsertar}>
-                    <ModalHeader>Insert Product</ModalHeader>
-                    <ModalBody>
-                        <div className="form-group">
-                            <label>Name</label><br></br>
-                            <input type="text"
-                                className="form-control"
-                                name="name" onChange={handleChange} />
-                        </div>
-
-                        <div className="form-group">
-                            <label>Description</label><br></br>
-                            <input type="text"
-                                className="form-control"
-                                name="description" onChange={handleChange} />
-                        </div>
-                        <div className="form-group">
-                            <label>Image 1</label><br></br>
-                            <input type="text"
-                                className="form-control"
-                                name="image" onChange={handleChange} />
-                        </div>
-                        <div className="form-group">
-                            <label>Image 2</label><br></br>
-                            <input type="text"
-                                className="form-control"
-                                name="image2" onChange={handleChange} />
-                        </div>
-                        <div className="form-group">
-                            <label>Stock</label><br></br>
-                            <input type="text"
-                                className="form-control"
-                                name="stock" onChange={handleChange} />
-                        </div>
-                        <div className="form-group">
-                            <label>category</label><br></br>
-                            <input type="text"
-                                className="form-control"
-                                name="category" onChange={handleChange} />
-                        </div>
-                        <div className="form-group">
-                            <label>Subcategory</label><br></br>
-                            <input type="text"
-                                className="form-control"
-                                name="subcategory" onChange={handleChange} />
-                        </div>
-                        <div className="form-group">
-                            <label>Price</label><br></br>
-                            <input type="text"
-                                className="form-control"
-                                name="price" onChange={handleChange} />
-                        </div>
-                    </ModalBody>
-                    <ModalFooter>
-                        <button className="btn btn-primary" onClick={() => peticionPost()} >Insert</button>
-                        <button className="btn btn-danger" onClick={() => abrirCerrarModalInsertar()}>Cancel</button>
-                    </ModalFooter>
-                </Modal>
+            <Modal isOpen={modalInsertar}>
+                <ModalHeader>Insertar Producto</ModalHeader>
+                <ModalBody>
+                    {/* Formulario de inserción */}
+                    <div className="form-group">
+                        <label>Nombre</label>
+                        <input type="text" className="form-control" name="productName" onChange={handleChange} />
+                    </div>
+                    <div className="form-group">
+                        <label>Descripcion</label>
+                        <input type="text" className="form-control" name="description" onChange={handleChange} />
+                    </div>
+                    <div className="form-group">
+                        <label>Imagen</label>
+                        <input type="text" className="form-control" name="image" onChange={handleChange} />
+                    </div>
+                    <div className="form-group">
+                        <label>Stock</label>
+                        <input type="text" className="form-control" name="stock" onChange={handleChange} />
+                    </div>
+                    <div className="form-group">
+                        <label>Categoria</label>
+                        <select className="form-control" name="category" onChange={handleCategoryChange}>
+                            <option value="">Seleccione una categoria</option>
+                            {categories.map(category => (
+                                <option key={category.id} value={category.id}>{category.categoryName}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Subcategoria</label>
+                        <select className="form-control" name="subcategory" onChange={handleChange}>
+                            <option value="">Seleccione una subcategoria</option>
+                            {subcategories.map(subcategory => (
+                                <option key={subcategory.id} value={subcategory.id}>{subcategory.subcategoryName}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Precio</label>
+                        <input type="text" className="form-control" name="price" onChange={handleChange} />
+                    </div>
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="primary" onClick={handleInsertProduct}>Insertar</Button>
+                    <Button color="danger" onClick={abrirCerrarModalInsertar}>Cancelar</Button>
+                </ModalFooter>
+            </Modal>
                 <Modal isOpen={modalEditar}>
                     <ModalHeader>Edit Product</ModalHeader>
                     <ModalBody>
