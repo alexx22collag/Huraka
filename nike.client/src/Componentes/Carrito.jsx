@@ -1,44 +1,19 @@
 import React from 'react';
 
 const ShoppingCart = ({ cartItems, removeFromCart }) => {
-    const products = [
-        {
-            id: 1,
-            name: 'Timex Unisex Originals',
-            category: 'Watches',
-            price: 79.00,
-            quantity: 3,
-            image: 'https://bootstrapious.com/i/snippets/sn-cart/product-1.jpg',
-        },
-        {
-            id: 2,
-            name: 'Lumix camera lense',
-            category: 'Electronics',
-            price: 79.00,
-            quantity: 3,
-            image: 'https://bootstrapious.com/i/snippets/sn-cart/product-2.jpg',
-        },
-        {
-            id: 3,
-            name: 'Gray Nike running shoe',
-            category: 'Fashion',
-            price: 79.00,
-            quantity: 3,
-            image: 'https://bootstrapious.com/i/snippets/sn-cart/product-3.jpg',
-        },
-    ];
-
-    const subtotal = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
-    const shipping = 10.00;
-    const tax = 0.00;
-    const total = subtotal + shipping + tax;
+    const products = cartItems;
+    const subtotal = products.reduce((acc, product) => {
+        if (product.price && product.quantity) {
+            return acc + product.price * product.quantity;
+        } else {
+            return acc;
+        }
+    }, 0);
 
     return (
-
-        <div className="pb-5 ">
+        <div className="pb-5">
             <div className="container" id="containerMen">
                 <h1 id="h1Men">Shopping Cart</h1>
-                
             </div>
             <div className="container">
                 <div className="row">
@@ -94,9 +69,12 @@ const ShoppingCart = ({ cartItems, removeFromCart }) => {
                                                 <strong>{product.quantity}</strong>
                                             </td>
                                             <td className="border-0 align-middle">
-                                                <a href="#" className="text-dark">
-                                                    <i className="fa fa-trash"></i>
-                                                </a>
+                                                <button
+                                                    className="btn btn-danger"
+                                                    onClick={() => removeFromCart(product.id)}
+                                                >
+                                                    Remove
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}

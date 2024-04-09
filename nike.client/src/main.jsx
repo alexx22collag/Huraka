@@ -37,7 +37,7 @@ import FootwearKids from './Componentes/FootwearKids.jsx';
 import TablaCrear from './Componentes/TablaCrear.jsx';
 //Carrito
 import Carrito from './Componentes/Carrito.jsx';
-
+import rtItems from './Componentes/cartItems';
 
 const App = () => {
 
@@ -47,6 +47,7 @@ const App = () => {
             <Header />
             <Routes>
                 <Route path="/Men" element={<Men />} />
+                <Route path="/rtItems" element={<rtItems />} />
                 <Route path="/Women" element={<Women/>} />
                 <Route path="/Kids" element={<Kids/>} />
                 <Route path="/TablaCrear" element={<TablaCrear />} />

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import ProductList from './ProductList';
-import ShoppingCart from './ShoppingCart';
+import ProductList from './Women';
+import ShoppingCart from './Carrito';
 
-function App() {
+function rtItems() {
     const [cartItems, setCartItems] = useState([]);
 
     const addToCart = (product) => {
@@ -21,4 +21,4 @@ function App() {
     );
 }
 
-export default App; rtItems;
+export default rtItems;

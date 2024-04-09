@@ -182,11 +182,7 @@ const Kids = () => {
                                             </div>
                                         </div>
                                         <span className="ms-2 text-muted fw-medium"> 4.7 (456)</span>
-                                        <div className="select-container">
-                                            <button className="btn btn-outline-danger btn-sm mx-2" onClick={() => handleDeleteProduct(product.id)}>
-                                                Eliminar
-                                            </button>
-                                        </div>
+                                       
                                     </div>
                                     {/* /Review Stars */}
                                     <p className="fw-bolder m-0 mt-2">${product.price}</p>
