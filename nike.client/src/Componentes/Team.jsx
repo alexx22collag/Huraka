@@ -50,22 +50,22 @@ const TeamSection = () => {
           <div className="row align-items-center">
             <div className="col-md-3 col-sm-6 my-3">
               <a href="https://www.instagram.com/nike/">
-                <img className="img-fluid img-brand d-block mx-auto" src="./src/assets/Instagram.webp" alt="" aria-label="Instagram Logo" />
+                <img className=" img-brand d-block mx-auto" src="./src/assets/Instagram.webp" alt="" aria-label="Instagram Logo" />
               </a>
             </div>
             <div className="col-md-3 col-sm-6 my-3">
               <a href="https://twitter.com/Nike">
-                <img className="img-fluid img-brand d-block mx-auto" src="./src/assets/Twitter.webp" alt="" aria-label="Twitter Logo" />
+                <img className=" img-brand d-block mx-auto" src="./src/assets/Twitter.webp" alt="" aria-label="Twitter Logo" />
               </a>
             </div>
             <div className="col-md-3 col-sm-6 my-3">
               <a href="https://www.linkedin.com/company/nike/">
-                <img className="img-fluid img-brand d-block mx-auto" src="./src/assets/LinkedIn.webp" alt="" aria-label="LinkedIn Logo" />
+                <img className="img-brand d-block mx-auto" src="./src/assets/LinkedIn.webp" alt="" aria-label="LinkedIn Logo" />
               </a>
             </div>
             <div className="col-md-3 col-sm-6 my-3">
               <a href="https://www.facebook.com/nike/?locale=es_ES">
-                <img className="img-fluid img-brand d-block mx-auto" src="./src/assets/Facebook.webp" alt="" aria-label="Facebook Logo" />
+                <img className=" img-brand d-block mx-auto" src="./src/assets/Facebook.webp" alt="" aria-label="Facebook Logo" />
               </a>
             </div>
           </div>

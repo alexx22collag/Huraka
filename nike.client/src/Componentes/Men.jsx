@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Button from './Button';
 
 const Men = () => {
     const [start, setStart] = useState(true);
@@ -135,88 +136,80 @@ const Men = () => {
                 </div>
             </nav>
             <div className="container-fluid my-5">
-                
                 <div className="row">
                     {data.map((product) => (
-                            <div key={product.id} className="col-12 col-sm-6 col-lg-4">
-                                <div className="card border-0 position-relative h-100 card-listing hover-trigger">
-                                    <div className="card-header">
-                                        {/* Card Images */}
-                                        <figure className="position-relative overflow-hidden d-block bg-light">
-                                            <img
-                                                className="w-100 img-fluid position-relative z-index-10"
-                                                title=""
-                                                src={product.image}
-                                                alt={product.productName}
-                                            />
+                        <div key={product.id} className="col-12 col-sm-6 col-lg-4">
+                            <div className="card border-0 position-relative h-100 card-listing hover-trigger">
+                                <div className="card-header">
+                                    {/* Card Images */}
+                                    <figure className="position-relative overflow-hidden d-block bg-light">
+                                        <img
+                                            className="w-100 img-fluid position-relative z-index-10"
+                                            title=""
+                                            src={product.image}
+                                            alt={product.productName}
+                                        />
                                     </figure>
                                     <figure className="position-absolute z-index-20 start-0 top-0 hover-show bg-light">
-                                            <img
-                                                className="w-100 img-fluid"
-                                                title=""
-                                                src={product.image2}
-                                                alt={product.productName}
-                                            />
+                                        <img
+                                            className="w-100 img-fluid"
+                                            title=""
+                                            src={product.image2}
+                                            alt={product.productName}
+                                        />
                                     </figure>
-                                    
                                 </div>
-                                <div >
-                                    <h3><strong>{product.productName}</strong></h3>
-                                    <h5> {product.description}</h5>
-                                </div>
-                                    <div className="card-body px-0 text-center">
-                                        {/* Review Stars */}
-                                        <div className="d-flex justify-content-center align-items-center mx-auto mb-1 colspan-3 md-3">
-                                            <div className="rating position-relative d-table">
-                                                <div className="position-absolute stars" style={{ width: '90%' }}>
-                                                    <i className="ri-star-fill text-dark mr-1"></i>
-                                                    <i className="ri-star-fill text-dark mr-1"></i>
-                                                    <i className="ri-star-fill text-dark mr-1"></i>
-                                                    <i className="ri-star-fill text-dark mr-1"></i>
-                                                    <i className="ri-star-fill text-dark mr-1"></i>
-                                                </div>
-                                                <div className="stars">
-                                                    <i className="ri-star-fill mr-1 text-muted opacity-25"></i>
-                                                    <i className="ri-star-fill mr-1 text-muted opacity-25"></i>
-                                                    <i className="ri-star-fill mr-1 text-muted opacity-25"></i>
-                                                    <i className="ri-star-fill mr-1 text-muted opacity-25"></i>
-                                                    <i className="ri-star-fill mr-1 text-muted opacity-25"></i>
-                                                </div>
-                                            </div>
-                                            <span className="ms-2 text-muted fw-medium"> 4.7 (456)</span>
-                                            <div class="select-container">
-                                               
-                                                
-                                            </div>
 
-
+                                <div className="card-body px-0 text-center">
+                                    <h4>
+                                        <strong>{product.productName}</strong>
+                                    </h4>
+                                    <p>{product.description}</p>
+                                    <div className="d-flex justify-content-center align-items-center mx-auto mb-1 colspan-3 md-3">
+                                        <div className="rating position-relative d-table">
+                                            <div className="position-absolute stars" style={{ width: '90%' }}>
+                                                <i className="ri-star-fill text-dark mr-1"></i>
+                                                <i className="ri-star-fill text-dark mr-1"></i>
+                                                <i className="ri-star-fill text-dark mr-1"></i>
+                                                <i className="ri-star-fill text-dark mr-1"></i>
+                                                <i className="ri-star-fill text-dark mr-1"></i>
+                                            </div>
+                                            <div className="stars">
+                                                <i className="ri-star-fill mr-1 text-muted opacity-25"></i>
+                                                <i className="ri-star-fill mr-1 text-muted opacity-25"></i>
+                                                <i className="ri-star-fill mr-1 text-muted opacity-25"></i>
+                                                <i className="ri-star-fill mr-1 text-muted opacity-25"></i>
+                                                <i className="ri-star-fill mr-1 text-muted opacity-25"></i>
+                                            </div>
+                                        </div>
+                                        <span className="ms-2 text-muted fw-medium"> 4.7 (456)</span>
+                                        <div className="select-container">
+                                            <button className="btn btn-outline-danger btn-sm mx-2" onClick={() => handleDeleteProduct(product.id)}>
+                                                Eliminar
+                                            </button>
+                                        </div>
+                                    </div>
+                                    {/* /Review Stars */}
+                                    <p className="fw-bolder m-0 mt-2">${product.price}</p>
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <select className="custom-select form-select-sm">
+                                            <option selected disabled>
+                                                SIZE
+                                            </option>
+                                            <option value="1">XS</option>
+                                            <option value="2">S</option>
+                                            <option value="3">M</option>
+                                            <option value="4">L</option>
+                                            <option value="5">XL</option>
+                                        </select>
+                                        <Button />
                                     </div>
                                 </div>
-
-                                        {/* /Review Stars */}
-
-                                        <p className="fw-bolder m-0 mt-2">${product.price}</p>
-                                        <p>
-                                            <select class="form-select form-select-sm" aria-label="Small select example">
-                                                <option selected>SIZE</option>
-                                                <option value="1">XS</option>
-                                                <option value="2">S</option>
-                                                <option value="3">M</option>
-                                                <option value="4">L</option>
-                                                <option value="5">XL</option>
-                                            </select>
-                                           
-                                </p>
-                                <button className="btn btn-dark text-white">Add to car</button> <br></br>
-    
-                                </div>
                             </div>
-                        ))
-                    }
+                        </div>
+                    ))}
                 </div>
             </div>
-
-          
         </div>
     );
 };

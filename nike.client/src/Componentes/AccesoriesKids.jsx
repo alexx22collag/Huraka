@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Button from './Button';
 
 const AccesoriesKids = () => {
     const [start, setStart] = useState(true);
@@ -64,46 +65,45 @@ const AccesoriesKids = () => {
     return (
         <div className="slider" style={{ paddingTop: '150px' }}>
             <div className="container" id="containerMen">
-                <h1 id="h1Men">Men's Nike</h1>
+                <h1 id="h1Men">Kids's Nike</h1>
                 <p id="pMen">Just Do It.</p>
                 <p id="pMen">Si nadie piensa que puedes, entonces tienes que hacerlo.</p>
             </div>
-
             <div className="slider__content" ref={sliderRef}>
                 <div className="slider__item">
-                    <img className="slider__image" src="./src/assets/footbalM.jpg" alt="Image" />
+                    <img className="slider__image" src="./src/assets/smallK.jpeg" alt="Image" />
+                    <div className="slider__info">
+                        <h2>Baby</h2>
+                    </div>
+                </div>
+                <div className="slider__item">
+                    <img className="slider__image" src="./src/assets/bskK.jpg" alt="Image" />
+                    <div className="slider__info">
+                        <h2>Basketball</h2>
+                    </div>
+                </div>
+                <div className="slider__item">
+                    <img className="slider__image" src="./src/assets/runk.jpg" alt="Image" />
+                    <div className="slider__info">
+                        <h2>Running</h2>
+                    </div>
+                </div>
+                <div className="slider__item">
+                    <img className="slider__image" src="./src/assets/footballK.png" alt="Image" />
                     <div className="slider__info">
                         <h2>Football</h2>
                     </div>
                 </div>
                 <div className="slider__item">
-                    <img className="slider__image" src="./src/assets/Snkm.jpg" alt="Image" />
+                    <img className="slider__image" src="./src/assets/lifestyleK.jpg" alt="Image" />
                     <div className="slider__info">
-                        <h2>Sneakers</h2>
+                        <h2>Lifestyle</h2>
                     </div>
                 </div>
                 <div className="slider__item">
-                    <img className="slider__image" src="./src/assets/skbM.jpeg" alt="Image" />
+                    <img className="slider__image" src="./src/assets/schoolk.jpg" alt="Image" />
                     <div className="slider__info">
-                        <h2>SkateBoard</h2>
-                    </div>
-                </div>
-                <div className="slider__item">
-                    <img className="slider__image" src="./src/assets/golfM.jpg" alt="Image" />
-                    <div className="slider__info">
-                        <h2>Golf</h2>
-                    </div>
-                </div>
-                <div className="slider__item">
-                    <img className="slider__image" src="./src/assets/boxeoM.png" alt="Image" />
-                    <div className="slider__info">
-                        <h2>Boxeo</h2>
-                    </div>
-                </div>
-                <div className="slider__item">
-                    <img className="slider__image" src="./src/assets/trainingM.jpg" alt="Image" />
-                    <div className="slider__info">
-                        <h2>Training</h2>
+                        <h2>For school</h2>
                     </div>
                 </div>
                 {/* Repite el div anterior para cada item del slider */}
@@ -135,8 +135,6 @@ const AccesoriesKids = () => {
                 </div>
             </nav>
             <div className="container-fluid my-5">
-
-
                 <div className="row">
                     {data.map((product) => (
                         <div key={product.id} className="col-12 col-sm-6 col-lg-4">
@@ -159,14 +157,13 @@ const AccesoriesKids = () => {
                                             alt={product.productName}
                                         />
                                     </figure>
-                                    
                                 </div>
-                                <div >
-                                    <h3><strong>{product.productName}</strong></h3>
-                                    <h5> {product.description}</h5>
-                                </div>
+
                                 <div className="card-body px-0 text-center">
-                                    {/* Review Stars */}
+                                    <h4>
+                                        <strong>{product.productName}</strong>
+                                    </h4>
+                                    <p>{product.description}</p>
                                     <div className="d-flex justify-content-center align-items-center mx-auto mb-1 colspan-3 md-3">
                                         <div className="rating position-relative d-table">
                                             <div className="position-absolute stars" style={{ width: '90%' }}>
@@ -185,39 +182,33 @@ const AccesoriesKids = () => {
                                             </div>
                                         </div>
                                         <span className="ms-2 text-muted fw-medium"> 4.7 (456)</span>
-                                        <div class="select-container">
-
-
+                                        <div className="select-container">
+                                            <button className="btn btn-outline-danger btn-sm mx-2" onClick={() => handleDeleteProduct(product.id)}>
+                                                Eliminar
+                                            </button>
                                         </div>
-
-
+                                    </div>
+                                    {/* /Review Stars */}
+                                    <p className="fw-bolder m-0 mt-2">${product.price}</p>
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <select className="custom-select form-select-sm">
+                                            <option selected disabled>
+                                                SIZE
+                                            </option>
+                                            <option value="1">XS</option>
+                                            <option value="2">S</option>
+                                            <option value="3">M</option>
+                                            <option value="4">L</option>
+                                            <option value="5">XL</option>
+                                        </select>
+                                        <Button />
                                     </div>
                                 </div>
-
-                                {/* /Review Stars */}
-
-                                <p className="fw-bolder m-0 mt-2">${product.price}</p>
-                                <p>
-                                    <select class="form-select form-select-sm" aria-label="Small select example">
-                                        <option selected>SIZE</option>
-                                        <option value="1">XS</option>
-                                        <option value="2">S</option>
-                                        <option value="3">M</option>
-                                        <option value="4">L</option>
-                                        <option value="5">XL</option>
-                                    </select>
-
-                                </p>
-                                <button className="btn btn-dark text-white">Add to car</button> <br></br>
-
                             </div>
                         </div>
-                    ))
-                    }
+                    ))}
                 </div>
             </div>
-
-
         </div>
     );
 };
