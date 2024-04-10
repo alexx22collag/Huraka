@@ -4,14 +4,12 @@ import axios from 'axios';
 import Button from './Button';
 
 
-const Women = () => {
+const Women = ({ addToCart }) => {
     const [start, setStart] = useState(true);
     const [end, setEnd] = useState(false);
     const sliderRef = useRef(null);
 
-    const addToCart = (product) => {
-        setCartItems([...cartItems, product]);
-    };
+
     const handleScroll = () => {
         setStart(sliderRef.current.scrollLeft === 0);
         setEnd(Math.abs((sliderRef.current.scrollWidth - sliderRef.current.offsetWidth) - sliderRef.current.scrollLeft) < 5);
@@ -122,6 +120,7 @@ const Women = () => {
                     <ul className="breadcrumb">
                         <li>
                             <Link to="/AccesoriesWomen">
+
                                 Accesories - Explore our latest collection
                             </Link>
                         </li>
@@ -132,7 +131,7 @@ const Women = () => {
                         </li>
                         <li>
                             <Link to="/ClothesWomen">
-                              Clothes - Discover the collection
+                               Clothes - Discover new collection
                             </Link>
                         </li>
 
@@ -202,7 +201,7 @@ const Women = () => {
                                             <option value="4">L</option>
                                             <option value="5">XL</option>
                                         </select>
-                                        <Button addToCart={() => addToCart(product)} />
+                                        <Button addToCart={() => addToCart(product)} product={product} />
                                     </div>
                                 </div>
                             </div>

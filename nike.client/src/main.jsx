@@ -38,6 +38,7 @@ import TablaCrear from './Componentes/TablaCrear.jsx';
 //Carrito
 import Carrito from './Componentes/Carrito.jsx';
 import rtItems from './Componentes/cartItems';
+import SignInUpForm from './Componentes/SignInUpForm';
 
 const App = () => {
 
@@ -52,6 +53,7 @@ const App = () => {
                 <Route path="/Kids" element={<Kids/>} />
                 <Route path="/TablaCrear" element={<TablaCrear />} />
                 <Route path="/Carrito" element={<Carrito/>}/>
+                <Route path="/SignInUpForm" element={<SignInUpForm />}/>
                 <Route path="/history" element={<History />} />
                 <Route path="/News" element={<News />} />
                 

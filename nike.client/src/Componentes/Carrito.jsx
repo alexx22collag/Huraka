@@ -1,14 +1,30 @@
-import React from 'react';
+import  React from 'react';
+import axios from 'axios';
+
 
 const ShoppingCart = ({ cartItems, removeFromCart }) => {
-    const products = cartItems;
-    const subtotal = products.reduce((acc, product) => {
-        if (product.price && product.quantity) {
-            return acc + product.price * product.quantity;
-        } else {
-            return acc;
+    const fetchProduct = async (productId) => {
+        try {
+            const response = await axios.get(`https://localhost:7218/api/Products/${productId}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching product:', error);
+            return null;
         }
-    }, 0);
+    };
+
+    const subtotal = cartItems ? Object.entries(cartItems).reduce(async (acc, [productId, quantity]) => {
+        const product = await fetchProduct(productId);
+        return (await acc) + (product ? product.price * quantity : 0);
+    }, Promise.resolve(0)) : 0;
+
+    // Calcular el costo de envío
+    const shipping = 5.0; // Tasa de envío fija de $5 por pedido
+
+    // Calcular los impuestos (asumiendo una tasa de impuesto del 8%)
+    const tax = subtotal * 0.08;
+
+    const total = subtotal + shipping + tax;
 
     return (
         <div className="pb-5">
@@ -40,44 +56,47 @@ const ShoppingCart = ({ cartItems, removeFromCart }) => {
                                 </thead>
                                 {/* Table Body */}
                                 <tbody>
-                                    {products.map((product) => (
-                                        <tr key={product.id}>
-                                            <th scope="row" className="border-0">
-                                                <div className="p-2">
-                                                    <img
-                                                        src={product.image}
-                                                        alt={product.name}
-                                                        width="70"
-                                                        className="img-fluid rounded shadow-sm"
-                                                    />
-                                                    <div className="ml-3 d-inline-block align-middle">
-                                                        <h5 className="mb-0">
-                                                            <a href="#" className="text-dark d-inline-block align-middle">
-                                                                {product.name}
-                                                            </a>
-                                                        </h5>
-                                                        <span className="text-muted font-weight-normal font-italic d-block">
-                                                            Category: {product.category}
-                                                        </span>
+                                    {cartItems && Object.entries(cartItems).map(async ([productId, quantity]) => {
+                                        const product = await fetchProduct(productId);
+                                        return (
+                                            <tr key={productId}>
+                                                <th scope="row" className="border-0">
+                                                    <div className="p-2">
+                                                        <img
+                                                            src={product ? product.image : ''}
+                                                            alt={product ? product.name : ''}
+                                                            width="70"
+                                                            className="img-fluid rounded shadow-sm"
+                                                        />
+                                                        <div className="ml-3 d-inline-block align-middle">
+                                                            <h5 className="mb-0">
+                                                                <a href="#" className="text-dark d-inline-block align-middle">
+                                                                    {product ? product.name : ''}
+                                                                </a>
+                                                            </h5>
+                                                            <span className="text-muted font-weight-normal font-italic d-block">
+                                                                Category: {product ? product.category : ''}
+                                                            </span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </th>
-                                            <td className="border-0 align-middle">
-                                                <strong>${product.price.toFixed(2)}</strong>
-                                            </td>
-                                            <td className="border-0 align-middle">
-                                                <strong>{product.quantity}</strong>
-                                            </td>
-                                            <td className="border-0 align-middle">
-                                                <button
-                                                    className="btn btn-danger"
-                                                    onClick={() => removeFromCart(product.id)}
-                                                >
-                                                    Remove
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
+                                                </th>
+                                                <td className="border-0 align-middle">
+                                                    <strong>${product ? product.price : ''}</strong>
+                                                </td>
+                                                <td className="border-0 align-middle">
+                                                    <strong>{quantity}</strong>
+                                                </td>
+                                                <td className="border-0 align-middle">
+                                                    <button
+                                                        className="btn btn-danger"
+                                                        onClick={() => removeFromCart(productId)}
+                                                    >
+                                                        Remove
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
                                 </tbody>
                             </table>
                         </div>
@@ -137,7 +156,8 @@ const ShoppingCart = ({ cartItems, removeFromCart }) => {
                                 <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong>
                                     <h5 className="font-weight-bold">${total.toFixed(2)}</h5>
                                 </li>
-                            </ul><a href="#" className="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
+                            </ul>
+                            <a href="#" className="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
                         </div>
                     </div>
                 </div>

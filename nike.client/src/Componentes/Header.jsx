@@ -102,7 +102,13 @@ const Header = () => {
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/Carrito">
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                    <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/SignInUpForm">
+                                    <i class="fas fa-user"></i>
 
                                 </Link>
                             </li>
