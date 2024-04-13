@@ -46,10 +46,14 @@ const Kids = () => {
 
     const baseUrl = "https://localhost:7218/api/Products/category/Kids";
     const [data, setData] = useState([]);
+    const headers = {
+        Authorization: `Bearer ${getAuthToken()}`,
+        "Content-Type": "application/json",
+    };
 
     const peticionGet = async () => {
         try {
-            const response = await axios.get(baseUrl);
+            const response = await axios.get(baseUrl,headers );
             setData(response.data);
         } catch (error) {
             console.log(error);

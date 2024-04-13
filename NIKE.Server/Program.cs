@@ -11,7 +11,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(
                name: "MyPolicy",
-               builder => builder.WithOrigins("http://localhost:5173").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+               builder => builder.WithOrigins("https://localhost:5173").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 });
 
 //Autenticacion
@@ -67,6 +67,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("MyPolicy");
+app.UseAuthentication();
 
 app.UseAuthorization();
 
