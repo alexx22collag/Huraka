@@ -111,16 +111,15 @@ namespace NIKE.Server.Controllers
         }
 
 
-
-
-
-
-
-
         private bool RunnerExists(int id)
         {
             return _context.Runners.Any(e => e.RunnerId == id);
         }
+
+
+
+
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] User model)
         {

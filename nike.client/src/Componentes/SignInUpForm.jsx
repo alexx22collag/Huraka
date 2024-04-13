@@ -1,5 +1,6 @@
 ﻿import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Modal, ModalBody, ModalFooter} from 'reactstrap';
 
 import { jwtDecode } from 'jwt-decode';
 
@@ -37,13 +38,69 @@ const SignInUpForm = () => {
         event.preventDefault();
         login(email, password).then((handleLogin) => {
             if (handleLogin) {
-                navigate("TablaCrear");
+                navigate("/TablaCrear");
             } else {
                 alert("Error al iniciar sesi�n");
                 navigate("/Men");
             }
         });
     };
+
+    //Registro 
+    const [data, setData] = useState([]);
+
+    const baseUrl = "https://localhost:7218/api/Users";
+
+    const [alert, setAlert] = useState({ message: '', type: '' });
+    const peticionGet = async () => {
+        try {
+            const response = await axios.get(baseUrl);
+            setData(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        peticionGet();
+    }, []);
+
+    const [userSelected, setuserSelected] = useState({
+        userId: '',
+        name: '',
+        lastName: '',
+        phoneNumber: '',
+        password: '',
+        email: ''
+
+    })
+    const handleChange = e => {
+        const { name, value } = e.target;
+        setuserSelected({
+            ...userSelected, [name]: value
+        });
+        console.log(userSelected);
+    }
+    const abrirCerrarModalInsertar = () => setModalInsertar(!modalInsertar);
+    const [modalInsertar, setModalInsertar] = useState(false);
+    const peticionPost = async () => {
+        if (!userSelected.email) {
+            setAlert({ message: 'Por favor, ingresa tu email', type: 'danger' });
+            return;
+        }
+        if (data.some(user => user.email === userSelected.email)) {
+            setAlert({ message: 'Ya estas inscrito en la carrera', type: 'warning' });
+            return;
+        }
+        delete userSelected.userId;
+        await axios.post(baseUrl, userSelected)
+            .then(response => {
+                setData(data.concat(response.data));
+                abrirCerrarModalInsertar();
+            }).catch(error => {
+                console.log(error);
+            });
+    }
 
     return (
         <>
@@ -55,6 +112,7 @@ const SignInUpForm = () => {
 
                         {/*formulario de login*/}
                         <div className="col bg-white p-5 rounded-end">
+                        
                             <h2 className="text-center fw-bold mt-5 py-5">Bienvenido</h2>
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
@@ -102,38 +160,91 @@ const SignInUpForm = () => {
                                 </div>
                             </form>
 
-                            <div className="container w-100 my-5">
-                                <div className="row text-center">
-                                    <div className="col-12">Iniciar Sesión con...</div>
-                                    <div className="row">
-                                        <div className="col">
-                                            <button className="btn btn-outline-primary btn-sm w-100 my-1">
-                                                <div className="row align-items-center">
-                                                    <div className="col-1 d-none d-md-block">
-                                                        <i className="bi bi-facebook fs-3 text-primary"></i>
-                                                    </div>
-                                                    <div className="col-10 col-md-10 text-center">
-                                                        Facebook
-                                                    </div>
-                                                </div>
-                                            </button>
-                                        </div>
-
-                                        <div className="col">
-                                            <button className="btn btn-outline-danger btn-sm w-100 my-1">
-                                                <div className="row align-items-center">
-                                                    <div className="col-1 d-none d-md-block">
-                                                        <i className="bi bi-google fs-3 text-danger"></i>
-                                                    </div>
-                                                    <div className="col-12 col-md-10 text-center">
-                                                        Google
-                                                    </div>
-                                                </div>
-                                            </button>
-                                        </div>
+                            <h2 className="text-center fw-bold mt-5 py-5">Registrarse</h2>
+                            <form onSubmit={handleSubmit}>
+                                <div className="mb-3">
+                                    <label htmlFor="Email" className="form-label">
+                                        Correo Electrónico
+                                    </label>
+                                    <input
+                                        id="email"
+                                        name="email"
+                                        placeholder="Your Email"
+                                        type="text"
+                                        required
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                    <div id="emailHelp" className="form-text">
+                                        Nunca compartiremos tu correo electrónico con nadie más.
                                     </div>
                                 </div>
-                            </div>
+                                <div className="mb-3">
+                                    <label htmlFor="Password" className="form-label">
+                                        Contraseña
+                                    </label>
+                                    <input
+                                        id="password"
+                                        name="password"
+                                        placeholder="Your Password"
+                                        type="password"
+                                        required
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="Password" className="form-label">
+                                        Name
+                                    </label>
+                                    <input
+                                        id="name"
+                                        name="name"
+                                        placeholder="Your Name"
+                                        type="text"
+                                        required
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="Password" className="form-label">
+                                        Last Name
+                                    </label>
+                                    <input
+                                        id="lastName"
+                                        name="lastName"
+                                        placeholder="Your Last Name"
+                                        type="text"
+                                        required
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="Password" className="form-label">
+                                        Phone Number
+                                    </label>
+                                    <input
+                                        id="phoneNumber"
+                                        name="phoneNumber"
+                                        placeholder="Your Phone Number"
+                                        type="text"
+                                        required
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div>
+                                    <button onClick={() => peticionPost()} >Registrarse</button>
+                                </div>
+                            </form>
+                            <Modal isOpen={modalInsertar}>
+                                <ModalBody>Usuario:{userSelected.name + " " + userSelected.lastName} con email:{userSelected.email} registrado </ModalBody>
+                                <ModalFooter>
+                                    <button className="btn btn-danger" onClick={() => abrirCerrarModalInsertar()}>Cerrar</button>
+                                </ModalFooter>
+                            </Modal>
                         </div>
                     </div>
                 </div>
