@@ -3,7 +3,6 @@ import { Button, CardBody } from 'reactstrap';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'font-awesome/css/font-awesome.min.css';
-
 import './index.css';
 import './style.scss';
 //Estructura
@@ -37,7 +36,6 @@ import FootwearKids from './Componentes/FootwearKids.jsx';
 import TablaCrear from './Componentes/TablaCrear.jsx';
 //Carrito
 import Carrito from './Componentes/Carrito.jsx';
-import rtItems from './Componentes/cartItems';
 import SignInUpForm from './Componentes/SignInUpForm';
 
 const App = () => {
@@ -49,7 +47,6 @@ const App = () => {
             <Routes>
                 {/*<Route path="/" element={<SignInUpForm />} />*/}
                 <Route path="/Men" element={<Men />} />
-                <Route path="/rtItems" element={<rtItems />} />
                 <Route path="/Women" element={<Women/>} />
                 <Route path="/Kids" element={<Kids/>} />
                 <Route path="/TablaCrear" element={<TablaCrear />} />

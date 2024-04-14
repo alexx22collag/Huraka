@@ -1,13 +1,44 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import axios from 'axios';
 import Button from './Button';
 
 
-const Women = ({ addToCart }) => {
+const Women = () => {
+    const [cartItems, setCartItems] = useState({});
+    const [data, setData] = useState([]);
     const [start, setStart] = useState(true);
     const [end, setEnd] = useState(false);
     const sliderRef = useRef(null);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get("https://localhost:7218/api/Products/category/Women");
+                setData(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+
+    const addToCart = (product) => {
+        console.log("Producto agregado al carrito:", product);
+        setCartItems((prevCartItems) => {
+            const updatedCartItems = { ...prevCartItems };
+            if (updatedCartItems[product.productId]) {
+                updatedCartItems[product.productId] += 1;
+            } else {
+                updatedCartItems[product.productId] = 1;
+            }
+            console.log("Estado actualizado del carrito:", updatedCartItems);
+            return updatedCartItems;
+        });
+    };
+
 
 
     const handleScroll = () => {
@@ -34,6 +65,7 @@ const Women = ({ addToCart }) => {
                 }
             }
         };
+ 
 
         // Iniciar el intervalo para desplazar el slider cada 5 segundos
         const interval = setInterval(autoScroll, 3000);
@@ -45,23 +77,20 @@ const Women = ({ addToCart }) => {
         };
     }, [end]);
 
-
     const baseUrl = "https://localhost:7218/api/Products/category/Women";
-    const [data, setData] = useState([]);
 
-    const peticionGet = async () => {
-        try {
-            const response = await axios.get(baseUrl);
-            setData(response.data);
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    //const peticionGet = async () => {
+    //    try {
+    //        const response = await axios.get(baseUrl);
+    //        setData(response.data);
+    //    } catch (error) {
+    //        console.log(error);
+    //    }
+    //};
 
-    useEffect(() => {
-        peticionGet();
-    }, []);
-
+    //useEffect(() => {
+    //    peticionGet();
+    //}, []);
 
 
     return (
@@ -142,7 +171,10 @@ const Women = ({ addToCart }) => {
                 <div className="row">
                     {data.map((product) => (
                         <div key={product.id} className="col-12 col-sm-6 col-lg-4">
-                            <div className="card border-0 position-relative h-100 card-listing hover-trigger">
+                            <div
+                                className="card border-0 position-relative h-100 card-listing hover-trigger"
+                                onClick={() => handleProductClick(product)}
+                                >
                                 <div className="card-header">
                                     {/* Card Images */}
                                     <figure className="position-relative overflow-hidden d-block bg-light">
@@ -162,7 +194,6 @@ const Women = ({ addToCart }) => {
                                         />
                                     </figure>
                                 </div>
-                               
                                 <div className="card-body px-0 text-center">
                                     <h4>
                                         <strong>{product.productName}</strong>
@@ -186,13 +217,11 @@ const Women = ({ addToCart }) => {
                                             </div>
                                         </div>
                                         <span className="ms-2 text-muted fw-medium"> 4.7 (456)</span>
-                                        
                                     </div>
-                                    {/* /Review Stars */}
                                     <p className="fw-bolder m-0 mt-2">${product.price}</p>
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <select className="custom-select form-select-sm">
-                                            <option selected disabled>
+                                        <select className="custom-select form-select-sm" >
+                                            <option >
                                                 SIZE
                                             </option>
                                             <option value="1">XS</option>
@@ -201,7 +230,10 @@ const Women = ({ addToCart }) => {
                                             <option value="4">L</option>
                                             <option value="5">XL</option>
                                         </select>
-                                        <Button addToCart={() => addToCart(product)} product={product} />
+                                        <Button addToCart={() => addToCart(product)} />
+                                        <Link to={`/product/${product.id}`}>
+                                            <button>Ver detalles</button>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

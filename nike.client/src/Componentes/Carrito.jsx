@@ -1,22 +1,31 @@
-import  React from 'react';
+import React, { useState,  useEffect } from 'react';
 import axios from 'axios';
 
 
 const ShoppingCart = ({ cartItems, removeFromCart }) => {
-    const fetchProduct = async (productId) => {
-        try {
-            const response = await axios.get(`https://localhost:7218/api/Products/${productId}`);
-            return response.data;
-        } catch (error) {
-            console.error('Error fetching product:', error);
-            return null;
-        }
-    };
+    const [products, setProducts] = useState([]);
 
-    const subtotal = cartItems ? Object.entries(cartItems).reduce(async (acc, [productId, quantity]) => {
-        const product = await fetchProduct(productId);
-        return (await acc) + (product ? product.price * quantity : 0);
-    }, Promise.resolve(0)) : 0;
+    useEffect(() => {
+        const fetchProducts = async () => {
+            // Verificar si cartItems tiene un valor válido
+            if (cartItems && Object.keys(cartItems).length > 0) {
+                const productIds = Object.keys(cartItems);
+                const fetchedProducts = await Promise.all(
+                    productIds.map(async (productId) => {
+                        const response = await axios.get(`https://localhost:7218/api/Products/${productId}`);
+                        return { ...response.data, quantity: cartItems[productId] };
+                    })
+                );
+                setProducts(fetchedProducts);
+            }
+        };
+
+        fetchProducts();
+    }, [cartItems]);
+
+
+    const subtotal = products.reduce((acc, product) => acc + (product.price * product.quantity), 0);
+   
 
     // Calcular el costo de envío
     const shipping = 5.0; // Tasa de envío fija de $5 por pedido
@@ -56,47 +65,45 @@ const ShoppingCart = ({ cartItems, removeFromCart }) => {
                                 </thead>
                                 {/* Table Body */}
                                 <tbody>
-                                    {cartItems && Object.entries(cartItems).map(async ([productId, quantity]) => {
-                                        const product = await fetchProduct(productId);
-                                        return (
-                                            <tr key={productId}>
-                                                <th scope="row" className="border-0">
-                                                    <div className="p-2">
-                                                        <img
-                                                            src={product ? product.image : ''}
-                                                            alt={product ? product.name : ''}
-                                                            width="70"
-                                                            className="img-fluid rounded shadow-sm"
-                                                        />
-                                                        <div className="ml-3 d-inline-block align-middle">
-                                                            <h5 className="mb-0">
-                                                                <a href="#" className="text-dark d-inline-block align-middle">
-                                                                    {product ? product.name : ''}
-                                                                </a>
-                                                            </h5>
-                                                            <span className="text-muted font-weight-normal font-italic d-block">
-                                                                Category: {product ? product.category : ''}
-                                                            </span>
-                                                        </div>
+                                    {products.map((product) => (
+                                        <tr key={product.id}>
+                                            <th scope="row" className="border-0">
+                                                <div className="p-2">
+                                                    <img
+                                                        src={product ? product.image : ''}
+                                                        alt={product ? product.name : ''}
+                                                        width="70"
+                                                        className="img-fluid rounded shadow-sm"
+                                                    />
+                                                    <div className="ml-3 d-inline-block align-middle">
+                                                        <h5 className="mb-0">
+                                                            <a href="#" className="text-dark d-inline-block align-middle">
+                                                                {product ? product.name : ''}
+                                                            </a>
+                                                        </h5>
+                                                        <span className="text-muted font-weight-normal font-italic d-block">
+                                                            Category: {product ? product.category : ''}
+                                                        </span>
                                                     </div>
-                                                </th>
-                                                <td className="border-0 align-middle">
-                                                    <strong>${product ? product.price : ''}</strong>
-                                                </td>
-                                                <td className="border-0 align-middle">
-                                                    <strong>{quantity}</strong>
-                                                </td>
-                                                <td className="border-0 align-middle">
-                                                    <button
-                                                        className="btn btn-danger"
-                                                        onClick={() => removeFromCart(productId)}
-                                                    >
-                                                        Remove
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
+                                                </div>
+                                            </th>
+                                            <td className="border-0 align-middle">
+                                                <strong>${product ? product.price : ''}</strong>
+                                            </td>
+                                            <td className="border-0 align-middle">
+                                                <strong>{product ? product.quantity : ''}</strong>
+                                            </td>
+                                            <td className="border-0 align-middle">
+                                                <button
+                                                    className="btn btn-danger"
+                                                    onClick={() => removeFromCart(product.id)}
+                                                >
+                                                    Remove
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+
                                 </tbody>
                             </table>
                         </div>

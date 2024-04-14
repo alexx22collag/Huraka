@@ -46,20 +46,20 @@ const Kids = () => {
 
     const baseUrl = "https://localhost:7218/api/Products/category/Kids";
     const [data, setData] = useState([]);
-    const headers = {
-        Authorization: `Bearer ${getAuthToken()}`,
-        "Content-Type": "application/json",
-    };
+    //const headers = {
+    //    Authorization: `Bearer ${getAuthToken()}`,
+    //    "Content-Type": "application/json",
+    //};
 
     const peticionGet = async () => {
         try {
-            const response = await axios.get(baseUrl,headers );
+            //const response = await axios.get(baseUrl,headers );
+            const response = await axios.get(baseUrl);
             setData(response.data);
         } catch (error) {
             console.log(error);
         }
     }
-
     useEffect(() => {
         peticionGet();
     }, []);
@@ -186,7 +186,7 @@ const Kids = () => {
                                             </div>
                                         </div>
                                         <span className="ms-2 text-muted fw-medium"> 4.7 (456)</span>
-                                       
+
                                     </div>
                                     {/* /Review Stars */}
                                     <p className="fw-bolder m-0 mt-2">${product.price}</p>

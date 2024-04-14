@@ -108,7 +108,7 @@ const Header = () => {
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/SignInUpForm">
-                                    <i class="fas fa-user"></i>
+                                    <i className="fas fa-user"></i>
 
                                 </Link>
                             </li>

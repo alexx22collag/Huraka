@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ProductList from './Women';
+import Women from './Women';
 import ShoppingCart from './Carrito';
 
 function cartItems() {
@@ -8,10 +8,10 @@ function cartItems() {
     const addToCart = (product) => {
         setCartItems((prevCartItems) => {
             const updatedCartItems = { ...prevCartItems };
-            if (updatedCartItems[product.id]) {
-                updatedCartItems[product.id] += 1;
+            if (updatedCartItems[product.productId]) {
+                updatedCartItems[product.productId] += 1;
             } else {
-                updatedCartItems[product.id] = 1;
+                updatedCartItems[product.productId] = 1;
             }
             return updatedCartItems;
         });
@@ -27,7 +27,7 @@ function cartItems() {
 
     return (
         <div>
-            <ProductList addToCart={addToCart} />
+            <Women addToCart={addToCart} />
             <ShoppingCart cartItems={cartItems} removeFromCart={removeFromCart} />
         </div>
     );

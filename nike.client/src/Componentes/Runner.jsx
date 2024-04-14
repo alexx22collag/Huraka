@@ -89,7 +89,7 @@ const Runner = () => {
                                 />
                             </FormGroup>
                             <FormGroup className="text-center">
-                                <Button className="item button-pressure" id="liveAlertBtn" onClick={() => peticionPost()} > I want run! <i class="fas fa-running"></i> </Button>
+                                <Button className="item button-pressure" id="liveAlertBtn" onClick={() => peticionPost()} > I want run! <i className="fas fa-running"></i> </Button>
                             </FormGroup>
                         </div>
                         <img src="https://media0.giphy.com/media/3o6Ztqh4JSlVqi2Z20/giphy.gif?cid=790b7611n5t4gbur4ll07olofw1q15tabmc06w17dc1tro5d&ep=v1_gifs_search&rid=giphy.gif&ct=g" style={{ width: '45%', height: 'auto', objectFit: 'cover' }} />

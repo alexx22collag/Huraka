@@ -187,8 +187,8 @@ const AccesoriesWomen = () => {
                                     {/* /Review Stars */}
                                     <p className="fw-bolder m-0 mt-2">${product.price}</p>
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <select className="custom-select form-select-sm">
-                                            <option selected disabled>
+                                        <select className="custom-select form-select-sm" >
+                                            <option >
                                                 SIZE
                                             </option>
                                             <option value="1">XS</option>
