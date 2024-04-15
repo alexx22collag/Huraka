@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Button from './Button';
 
@@ -10,6 +10,17 @@ const Women = () => {
     const [start, setStart] = useState(true);
     const [end, setEnd] = useState(false);
     const sliderRef = useRef(null);
+
+    useEffect(() => {
+        // Cargar los elementos del carrito desde el localStorage al montar el componente
+        const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || {};
+        setCartItems(storedCartItems);
+    }, []);
+
+    useEffect(() => {
+        // Guardar los elementos del carrito en el localStorage cuando se actualicen
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }, [cartItems]);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -24,9 +35,7 @@ const Women = () => {
         fetchProducts();
     }, []);
 
-
-    const addToCart = (product) => {
-        console.log("Producto agregado al carrito:", product);
+    const handleAddToCart = (product) => {
         setCartItems((prevCartItems) => {
             const updatedCartItems = { ...prevCartItems };
             if (updatedCartItems[product.productId]) {
@@ -34,12 +43,17 @@ const Women = () => {
             } else {
                 updatedCartItems[product.productId] = 1;
             }
-            console.log("Estado actualizado del carrito:", updatedCartItems);
             return updatedCartItems;
         });
     };
 
-
+    const handleRemoveFromCart = (productId) => {
+        setCartItems((prevCartItems) => {
+            const updatedCartItems = { ...prevCartItems };
+            delete updatedCartItems[productId];
+            return updatedCartItems;
+        });
+    };
 
     const handleScroll = () => {
         setStart(sliderRef.current.scrollLeft === 0);
@@ -65,7 +79,6 @@ const Women = () => {
                 }
             }
         };
- 
 
         // Iniciar el intervalo para desplazar el slider cada 5 segundos
         const interval = setInterval(autoScroll, 3000);
@@ -76,22 +89,6 @@ const Women = () => {
             clearInterval(interval);
         };
     }, [end]);
-
-    const baseUrl = "https://localhost:7218/api/Products/category/Women";
-
-    //const peticionGet = async () => {
-    //    try {
-    //        const response = await axios.get(baseUrl);
-    //        setData(response.data);
-    //    } catch (error) {
-    //        console.log(error);
-    //    }
-    //};
-
-    //useEffect(() => {
-    //    peticionGet();
-    //}, []);
-
 
     return (
         <div className="slider" style={{ paddingTop: '150px' }}>
@@ -230,19 +227,23 @@ const Women = () => {
                                             <option value="4">L</option>
                                             <option value="5">XL</option>
                                         </select>
-                                        <Button addToCart={() => addToCart(product)} />
-                                        <Link to={`/product/${product.id}`}>
-                                            <button>Ver detalles</button>
-                                        </Link>
+                                        <Button
+                                            product={product}
+                                            addToCart={() => handleAddToCart(product)}
+                                            removeFromCart={() => handleRemoveFromCart(product.productId)}
+                                        />
                                     </div>
+
                                 </div>
                             </div>
                         </div>
                     ))}
+
                 </div>
             </div>
             
         </div>
+
     );
 };
 

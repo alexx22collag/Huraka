@@ -62,38 +62,44 @@ const Runner = () => {
         <>
             <div className="row align-items-center justify-content-center mb-5">
                 <div className="col-md-6">
-                    <Form className="mx-auto mt-5 p-4 border rounded bg-light" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div style={{ flex: '0 0 45%' }}>
-                            <h1 className="text-center mb-4">Run with us</h1>
-                            <h4 className="text-center">Save the date: 09/05/2024</h4>
-                            <FormGroup>
-                                <Input
-                                    id="runnerName"
-                                    name="runnerName"
-                                    placeholder="Your Name"
-                                    type="text"
-                                    required
-                                    onChange={handleChange}
-                                    className="form-control"
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Input
-                                    id="email"
-                                    name="email"
-                                    placeholder="Your email"
-                                    type="email"
-                                    onChange={handleChange}
-                                    required
-                                    className="form-control"
-                                />
-                            </FormGroup>
-                            <FormGroup className="text-center">
-                                <Button className="item button-pressure" id="liveAlertBtn" onClick={() => peticionPost()} > I want run! <i className="fas fa-running"></i> </Button>
-                            </FormGroup>
+                    <Form className="mx-auto mt-5 p-4 border rounded bg-light" style={{ width: '250%', maxWidth: '1000px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <div style={{ width: '45%', marginRight: '20px' }}>
+                                <h1 className="text-center mb-4">Run with us</h1>
+                                
+                                <h4 className="text-center">Save the date: 09/05/2024</h4>
+                                <FormGroup>
+                                    <Input
+                                        id="runnerName"
+                                        name="runnerName"
+                                        placeholder="Your Name"
+                                        type="text"
+                                        required
+                                        onChange={handleChange}
+                                        className="form-control"
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Input
+                                        id="email"
+                                        name="email"
+                                        placeholder="Your email"
+                                        type="email"
+                                        onChange={handleChange}
+                                        required
+                                        className="form-control"
+                                    />
+                                </FormGroup>
+                                <FormGroup className="text-center">
+                                    <Button className="item button-pressure" id="liveAlertBtn" onClick={() => peticionPost()} > I want run! <i className="fas fa-running"></i> </Button>
+                                </FormGroup>
+                            </div>
+                            <img src="https://media0.giphy.com/media/3o6Ztqh4JSlVqi2Z20/giphy.gif?cid=790b7611n5t4gbur4ll07olofw1q15tabmc06w17dc1tro5d&ep=v1_gifs_search&rid=giphy.gif&ct=g" style={{ width: '45%', height: 'auto', objectFit: 'cover' }} />
                         </div>
-                        <img src="https://media0.giphy.com/media/3o6Ztqh4JSlVqi2Z20/giphy.gif?cid=790b7611n5t4gbur4ll07olofw1q15tabmc06w17dc1tro5d&ep=v1_gifs_search&rid=giphy.gif&ct=g" style={{ width: '45%', height: 'auto', objectFit: 'cover' }} />
                     </Form>
+
+
+
 
                     {alert.message && (
                         <div className={`alert alert-${alert.type} alert-dismissible`} role="alert">

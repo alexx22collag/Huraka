@@ -1,47 +1,55 @@
-import React, { useState,  useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; 
+import PaymentForm from './PaymentForm';
 
+const ShoppingCart = () => {
+    const [products, setProducts] = useState([
+        {
+            id: 1,
+            name: 'Nike Zenvy Strappy',
+            category: 'Women',
+            price: 54.99,
+            quantity: 1,
+            size: 'S',
+            image: 'https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/cebf3216-f268-4530-93f4-f2ec753bc85c/zenvy-strappy-sujetador-deportivo-de-sujecion-ligera-con-almohadilla-pHLQKt.png',
+        },
+        {
+            id: 2,
+            name: 'Segunda equipacion Match Brasil 2024',
+            category: 'Men',
+            price: 149.99,
+            quantity: 1,
+            size: 'M',
+            image: 'https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/89fcda45-96c7-4b1a-b273-d88e90cfa38b/segunda-equipacion-match-brasil-2024-camiseta-de-futbol-authentic-dri-fit-adv-LV9QkS.png',
+        },
+        {
+            id: 3,
+            name: 'Nike Sportswear Lightweight Synthetic Fill',
+            category: 'Kids',
+            price: 59.99,
+            quantity: 1,
+            size: 'L',
+            image: 'https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/5e2f7294-d408-4029-8c00-a2434e374bb9/sportswear-lightweight-synthetic-fill-chaqueta-holgada-con-capucha-nino-a-JRpT6H.png',
+        },
+    ]);
 
-const ShoppingCart = ({ cartItems, removeFromCart }) => {
-    const [products, setProducts] = useState([]);
+    const removeProduct = (id) => {
+        const updatedProducts = products.filter((product) => product.id !== id);
+        setProducts(updatedProducts);
+    };
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            // Verificar si cartItems tiene un valor válido
-            if (cartItems && Object.keys(cartItems).length > 0) {
-                const productIds = Object.keys(cartItems);
-                const fetchedProducts = await Promise.all(
-                    productIds.map(async (productId) => {
-                        const response = await axios.get(`https://localhost:7218/api/Products/${productId}`);
-                        return { ...response.data, quantity: cartItems[productId] };
-                    })
-                );
-                setProducts(fetchedProducts);
-            }
-        };
-
-        fetchProducts();
-    }, [cartItems]);
-
-
-    const subtotal = products.reduce((acc, product) => acc + (product.price * product.quantity), 0);
-   
-
-    // Calcular el costo de envío
-    const shipping = 5.0; // Tasa de envío fija de $5 por pedido
-
-    // Calcular los impuestos (asumiendo una tasa de impuesto del 8%)
-    const tax = subtotal * 0.08;
-
+    const subtotal = products.reduce((acc, product) => acc + product.price * product.quantity, 0);
+    const shipping = 10.00;
+    const tax = 21.00;
     const total = subtotal + shipping + tax;
 
     return (
         <div className="pb-5">
-            <div className="container" id="containerMen">
-                <h1 id="h1Men">Shopping Cart</h1>
-            </div>
             <div className="container">
                 <div className="row">
+                    <div className="container" id="containerMen">
+                        <h1 id="h1Men">Shopping Cart</h1>
+                    </div>
                     <div className="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
                         {/* Shopping cart table */}
                         <div className="table-responsive">
@@ -70,40 +78,43 @@ const ShoppingCart = ({ cartItems, removeFromCart }) => {
                                             <th scope="row" className="border-0">
                                                 <div className="p-2">
                                                     <img
-                                                        src={product ? product.image : ''}
-                                                        alt={product ? product.name : ''}
+                                                        src={product.image}
+                                                        alt={product.name}
                                                         width="70"
                                                         className="img-fluid rounded shadow-sm"
                                                     />
                                                     <div className="ml-3 d-inline-block align-middle">
                                                         <h5 className="mb-0">
                                                             <a href="#" className="text-dark d-inline-block align-middle">
-                                                                {product ? product.name : ''}
+                                                                {product.name}
                                                             </a>
                                                         </h5>
                                                         <span className="text-muted font-weight-normal font-italic d-block">
-                                                            Category: {product ? product.category : ''}
+                                                            Category: {product.category}
+                                                        </span>
+                                                        <span className="text-muted font-weight-normal font-italic d-block">
+                                                            Size: {product.size}
                                                         </span>
                                                     </div>
                                                 </div>
                                             </th>
                                             <td className="border-0 align-middle">
-                                                <strong>${product ? product.price : ''}</strong>
+                                                <strong>${product.price.toFixed(2)}</strong>
                                             </td>
                                             <td className="border-0 align-middle">
-                                                <strong>{product ? product.quantity : ''}</strong>
+                                                <strong>{product.quantity}</strong>
                                             </td>
                                             <td className="border-0 align-middle">
-                                                <button
-                                                    className="btn btn-danger"
-                                                    onClick={() => removeFromCart(product.id)}
+                                                <a
+                                                    href="#"
+                                                    className="text-dark"
+                                                    onClick={() => removeProduct(product.id)}
                                                 >
-                                                    Remove
-                                                </button>
+                                                    <i className="fa fa-trash"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     ))}
-
                                 </tbody>
                             </table>
                         </div>
@@ -159,12 +170,13 @@ const ShoppingCart = ({ cartItems, removeFromCart }) => {
                             <ul className="list-unstyled mb-4">
                                 <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Order Subtotal </strong><strong>${subtotal.toFixed(2)}</strong></li>
                                 <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Shipping and handling</strong><strong>${shipping.toFixed(2)}</strong></li>
-                                <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Tax</strong><strong>${tax.toFixed(2)}</strong></li>
+                                <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">IVA</strong><strong>${tax.toFixed(2)}</strong></li>
                                 <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong>
                                     <h5 className="font-weight-bold">${total.toFixed(2)}</h5>
                                 </li>
-                            </ul>
-                            <a href="#" className="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
+                            </ul><Link to="/Payment" className="btn btn-dark rounded-pill py-2 btn-block">
+                                Proceed to checkout
+                            </Link>
                         </div>
                     </div>
                 </div>

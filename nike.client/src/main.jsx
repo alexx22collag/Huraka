@@ -21,7 +21,6 @@ import FootwearMen from './Componentes/FootwearMen.jsx';
 import ClothesMen from './Componentes/ClothesMen.jsx';
 import AccesoriesMen from './Componentes/AccesoriesMen.jsx';
 
-
 //Women
 import Women from './Componentes/Women.jsx';
 import AccesoriesWomen from './Componentes/AccesoriesWomen.jsx';
@@ -37,24 +36,25 @@ import TablaCrear from './Componentes/TablaCrear.jsx';
 //Carrito
 import Carrito from './Componentes/Carrito.jsx';
 import SignInUpForm from './Componentes/SignInUpForm';
+import PaymentForm from './Componentes/PaymentForm';
+import SuccessBox from './Componentes/SuccessBox';
 
 const App = () => {
-
-
     return (
         <Router>
             <Header />
             <Routes>
                 {/*<Route path="/" element={<SignInUpForm />} />*/}
                 <Route path="/Men" element={<Men />} />
-                <Route path="/Women" element={<Women/>} />
-                <Route path="/Kids" element={<Kids/>} />
+                <Route path="/Women" element={<Women />} />
+                <Route path="/Kids" element={<Kids />} />
                 <Route path="/TablaCrear" element={<TablaCrear />} />
-                <Route path="/Carrito" element={<Carrito/>}/>
-                <Route path="/SignInUpForm" element={<SignInUpForm />}/>
+                <Route path="/Carrito" element={<Carrito />} />
+                <Route path="/SignInUpForm" element={<SignInUpForm />} />
                 <Route path="/history" element={<History />} />
                 <Route path="/News" element={<News />} />
-                
+                <Route path="/Payment" element={<PaymentForm />} /> 
+                <Route path="/Success" element={<SuccessBox />} />
                 <Route path="/ClothesMen" element={<ClothesMen />} />
                 <Route path="/FootwearMen" element={<FootwearMen />} />
                 <Route path="/AccesoriesMen" element={<AccesoriesMen />} />
@@ -69,21 +69,15 @@ const App = () => {
 
                 <Route path="/" element={
                     <>
-                        
                         <Body />
-                        
                         <Portfolio />
-                            <Runner />
-
-                        <History/>
+                        <Runner />
+                        <History />
                         <Team />
                         <Contact />
-                        
-                        
                     </>
                 } />
             </Routes>
-
             <Footer />
         </Router>
     );

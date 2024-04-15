@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
-const Button = ({ addToCart, product }) => {
+const Button = ({ product }) => {
     const buttonRef = useRef(null);
 
     useEffect(() => {
@@ -57,6 +57,7 @@ const Button = ({ addToCart, product }) => {
                                 .timeline({
                                     onComplete() {
                                         button.classList.add('done');
+                                        handleAddToCart(product);
                                     },
                                 })
                                 .to(truck, {
@@ -101,11 +102,26 @@ const Button = ({ addToCart, product }) => {
                     x: -24,
                     y: -6,
                 });
+                handleRemoveFromCart(product.productId);
             }
-
-            addToCart(product);
         });
-    }, [addToCart, product]);
+    }, [product]);
+
+    const handleAddToCart = (product) => {
+        let cartItems = JSON.parse(localStorage.getItem('cartItems')) || {};
+        if (cartItems[product.productId]) {
+            cartItems[product.productId] += 1;
+        } else {
+            cartItems[product.productId] = 1;
+        }
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    };
+
+    const handleRemoveFromCart = (productId) => {
+        let cartItems = JSON.parse(localStorage.getItem('cartItems')) || {};
+        delete cartItems[productId];
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    };
 
     return (
         <button className="truck-button" ref={buttonRef}>
