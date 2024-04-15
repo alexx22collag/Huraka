@@ -32,7 +32,7 @@ const TeamSection = () => {
                 <p className="text-muted" style={{ color: 'black' }}>
                   Developer
                 </p>
-                              <a className="btn btn-dark btn-social mx-2" href="https://media.licdn.com/dms/image/D4D35AQFcwDF2t8ZnVA/profile-framedphoto-shrink_800_800/0/1709832301040?e=1713740400&v=beta&t=NFSWBolHjBqo9Y0ppWPSrkmKX4gIibq1IE5LWKyfSqI" aria-label=" LinkedIn Profile">
+                              <a className="btn btn-dark btn-social mx-2" href="https://www.linkedin.com/in/brayan-alexander-collaguazo-diaz-b8a664195/" aria-label=" LinkedIn Profile">
                   <i className="fab fa-linkedin-in"></i>
                 </a>
               </div>
