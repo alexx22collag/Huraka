@@ -1,6 +1,6 @@
 ﻿import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Modal, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalBody, ModalFooter,Button } from 'reactstrap';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 
@@ -137,6 +137,12 @@ const SignInUpForm = () => {
                                                             <input type="text" className="form-style" placeholder="Full Name" style={{ padding: '13px 20px', paddingLeft: '55px', height: '48px', width: '100%', fontWeight: '500', borderRadius: '4px', fontSize: '14px', lineHeight: '22px', letterSpacing: '0.5px', outline: 'none', color: '#c4c3ca', backgroundColor: '#1f2029', border: 'none', transition: 'all 200ms linear', boxShadow: '0 4px 8px 0 rgba(21,21,21,.2)' }} id="name" name="name" placeholder="Your Name" type="text" required onChange={handleChange} />
                                                             <i className="input-icon uil uil-user"></i>
                                                         </div>
+
+                                                        <div className="form-group">
+                                                            <input type="text" className="form-style" placeholder="Full Name" style={{ padding: '13px 20px', paddingLeft: '55px', height: '48px', width: '100%', fontWeight: '500', borderRadius: '4px', fontSize: '14px', lineHeight: '22px', letterSpacing: '0.5px', outline: 'none', color: '#c4c3ca', backgroundColor: '#1f2029', border: 'none', transition: 'all 200ms linear', boxShadow: '0 4px 8px 0 rgba(21,21,21,.2)' }} id="lastName" name="lastName" placeholder="Your Last Name" type="text" required onChange={handleChange} />
+                                                            <i className="input-icon uil uil-user"></i>
+                                                        </div>
+
                                                         <div className="form-group mt-2">
                                                             <input type="tel" className="form-style" placeholder="Phone Number" style={{ padding: '13px 20px', paddingLeft: '55px', height: '48px', width: '100%', fontWeight: '500', borderRadius: '4px', fontSize: '14px', lineHeight: '22px', letterSpacing: '0.5px', outline: 'none', color: '#c4c3ca', backgroundColor: '#1f2029', border: 'none', transition: 'all 200ms linear', boxShadow: '0 4px 8px 0 rgba(21,21,21,.2)' }} id="phoneNumber" name="phoneNumber" placeholder="Your Phone Number" type="text" required onChange={handleChange} />
                                                             <i className="input-icon uil uil-phone"></i>
@@ -149,7 +155,7 @@ const SignInUpForm = () => {
                                                             <input type="password" className="form-style" placeholder="Password" style={{ padding: '13px 20px', paddingLeft: '55px', height: '48px', width: '100%', fontWeight: '500', borderRadius: '4px', fontSize: '14px', lineHeight: '22px', letterSpacing: '0.5px', outline: 'none', color: '#c4c3ca', backgroundColor: '#1f2029', border: 'none', transition: 'all 200ms linear', boxShadow: '0 4px 8px 0 rgba(21,21,21,.2)' }} id="password" name="password" placeholder="Your Password" type="password" required onChange={handleChange} />
                                                             <i className="input-icon uil uil-lock-alt"></i>
                                                         </div>
-                                                        <button onClick={() => peticionPost()} className="btn mt-4" style={{ borderRadius: '4px', height: '44px', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', transition: 'all 200ms linear', padding: '0 30px', letterSpacing: '1px', display: 'inline-flex', alignItems: 'center', backgroundColor: 'white', color: '#000000' }}>Register</button>
+                                                        <Button onClick={() => peticionPost()} className="btn mt-4" style={{ borderRadius: '4px', height: '44px', fontSize: '13px', fontWeight: '600', textTransform: 'uppercase', transition: 'all 200ms linear', padding: '0 30px', letterSpacing: '1px', display: 'inline-flex', alignItems: 'center', backgroundColor: 'white', color: '#000000' }}>Register</Button>
                                                     </form>
                                                 </div>
                                             </div>
